@@ -1,3 +1,5 @@
+const AsyncFunction = Object.getPrototypeOf(async function() {}).constructor;
+
 interface constructorArgs {
   /**
    *  The "args" object is used to specify the arguments required for the execute function.
@@ -75,7 +77,7 @@ export class WebWorker {
           argsString += `${arg} = ${val}, `;
       }
     }
-
-    return new Function(argsString, body).toString();
+    const fn = new AsyncFunction(argsString, body).toString();
+    return fn;
   }
 }
